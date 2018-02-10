@@ -1,6 +1,7 @@
 var express = require('express');
 var db = require('./db');
 var connection = require('./db/index.js');
+var controller = require('./controllers');
 
 // Middleware
 var morgan = require('morgan');
@@ -31,14 +32,5 @@ if (!module.parent) {
   console.log('Listening on', app.get('port'));
 }
 
-app.get('/', (req, res) => {
-  // connection.connection.connect();
-  connection.connection.query('SELECT * FROM messages', function (error, results, fields) {
-    if (error) {
-      throw error;
-    }
-    console.log('query: ', results);
-  });
-  res.send('hi');
-});
+app.get('/', controller.messages.get);
 
